@@ -12,7 +12,17 @@ final_audio = list()
 sampleRate = 48000.0    # Other standard values are 44.1K, 88.2K, 96K.
 
 # The wave generated is a "sine" wave.
-def sineWave(frequency = None, duration = None, amplitude = None):
+
+
+def sineWave(frequency=None, duration=None, amplitude=None):
+    """
+    Generates SINE wave.\n
+    Arguments:\n
+        frequency: Sets the frequency of the wave (default = 560).
+        duration: Duration between each pulse (in ms). (default = 100 ms)
+        amplitude: Amplitude of the wave (default = 0.6) ranging between [0, 1].
+
+    """
     # Using global variables to store in the list created above.
     global final_audio
 
@@ -28,19 +38,24 @@ def sineWave(frequency = None, duration = None, amplitude = None):
     if amplitude == None:
         amplitude = 0.6
 
-    numberSamples = int(duration * (sampleRate / 1000.0))   # Deciding the time span of per part of wave.
+    # Deciding the time span of per part of wave.
+    numberSamples = int(duration * (sampleRate / 1000.0))
 
     # A mathematical equation to create SINEWAVE.
     for x in range(0, numberSamples):
-        final_audio.append(amplitude * math.sin(2 * math.pi * frequency * (x / sampleRate)))
+        final_audio.append(
+            amplitude * math.sin(2 * math.pi * frequency * (x / sampleRate)))
 
     return
 
 # To add a pause if needed.
-def silence(duration = None):
 
+
+def silence(duration=None):
     """
-    To add silence, just set the frequncy and amplitude to "0".
+    To add silence, just set the frequncy and amplitude to "0".\n
+    Arguments:\n
+        duration: The duration of silence (default = 250 ms).
     """
     # Setting the amplitude to 0.
     amplitude = 0
@@ -52,13 +67,18 @@ def silence(duration = None):
     numberSamples = int(duration * (sampleRate / 1000.0))
 
     for x in range(0, numberSamples):
-        final_audio.append(amplitude * math.sin(2 * math.pi * frequency * (x / sampleRate)))
+        final_audio.append(
+            amplitude * math.sin(2 * math.pi * frequency * (x / sampleRate)))
 
     return
 
-# A function to save the audio generated in a file.
-def saveAudio(filename = None):
 
+def saveAudio(filename=None):
+    """
+    save the audio generated in a file.\n
+    Arguments:\n
+        filename: The name of the output file (default = output).
+    """
     # Creating a new wavefile (for output) with some file name.
     if filename == None:
         filename = "output.wav"
@@ -73,7 +93,9 @@ def saveAudio(filename = None):
     comptype = "NONE"               # Compression Type
     compname = "not compressed"     # Compression Name
 
-    file_wave.setparams((nchannels, sampwidth, sampleRate, nframes, comptype, compname))
+    # Setting the parameters of the wave.
+    file_wave.setparams((nchannels, sampwidth, sampleRate,
+                         nframes, comptype, compname))
 
     for pitch in final_audio:
         file_wave.writeframes(struct.pack("h", int(pitch * 32767)))

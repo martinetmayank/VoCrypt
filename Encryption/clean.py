@@ -1,9 +1,16 @@
-# Clean
+# Cleans the temp data generated while encryption.
 
-import os
 
-def cleanTemp(*argv):
-    for file in argv:
-        directory = os.getcwd()
-        print(directory)
-        os.remove(directory/file)
+def del_file(filename):
+    """
+    Deletes a file.\n
+    Arguments:\n
+        filename: Name of the file to be deleted.
+    """
+    import os
+    path = os.path.realpath(filename)
+
+    if os.path.exists(path):
+        os.remove(path)
+    else:
+        print("Path doesn't exist!!")

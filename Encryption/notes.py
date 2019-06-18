@@ -1,5 +1,6 @@
 import toAudio
 from converter import convert
+from clean import del_file
 
 # Set of my Custom Keys.
 A = [637, 850, 524]
@@ -33,11 +34,10 @@ space = [5005, 5005, 5005]
 comma = [1665, 1665, 1665]
 fullStop = [3000, 3000, 3000]
 
+
 class notes:
 
-    def hear(self, sentence = None):
-        #print(sentence)
-        global write_text
+    def hear(self, sentence=None):
         # Making a variable to store all the data of frequencies.
         write_text = ""
 
@@ -102,26 +102,27 @@ class notes:
             elif text == " ":
                 out = space
             elif text == ",":
-                out == comma
+                out = comma
             elif text == ".":
                 out = fullStop
-            #print(out)
+            # print(out)
 
             for i in out:
                 toAudio.sineWave(i)
                 toAudio.silence()
                 write_text += str(i) + " "
 
-        #print(write_text)
+        # print(write_text)
 
         # Enter the name of OUTPUT file
         outputFile = input("Enter the name of output file ---> ")
-        filename = outputFile + ".wav"  # Adding extensions to output file.
-        toAudio.saveAudio(filename)     # Saving the audio to the OUTPUT file.
-        self.writeText(write_text)      # Writing all the frequnecies set.
-        convert(outputFile, filename)   # Convertingt the WAV file to MP3 file.
+        filename = outputFile + ".wav"      # Adding extensions to output file.
+        toAudio.saveAudio(filename)         # Saving the audio to the OUTPUT file.
+        self.writeText(write_text)          # Writing all the frequnecies set.
+        convert(outputFile, filename)       # Convertingt the WAV file to MP3 file.
+        del_file(filename)
 
     # A function to create a text file with all the frequesncies set.
     def writeText(self, write_text):
-        file = open("key.txt", "w")     # opening and creating the file.
-        file.write(write_text)          # Writing in the file created.
+        file = open("key.txt", "w")         # opening and creating the file.
+        file.write(write_text)              # Writing in the file created.
