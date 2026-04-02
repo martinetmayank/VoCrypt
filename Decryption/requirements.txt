@@ -1,1 +1,1 @@
-tinytag==1.2.2
+tinytag==2.2.1
